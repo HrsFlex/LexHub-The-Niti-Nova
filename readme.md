@@ -1,12 +1,12 @@
-# The Niti Nova at WeHack-2025
+# The Niti Nova at HackByte 3.0
 
-Welcome to **Vidhi Shiksha Ai**!
+Welcome to **LexHub**!
 
 ## About Us
 We are a team dedicated to revolutionizing the way legal and governance processes are handled. Our mission is to simplify complex systems, making them accessible and efficient for everyone.
 
 ## Project Overview
-The Vidhi Shiksha Ai focuses on creating innovative tools and platforms that streamline legal and governance workflows. By leveraging cutting-edge technology, we aim to empower individuals and organizations to navigate these domains with ease.
+The LexHub focuses on creating innovative tools and platforms that streamline legal and governance workflows. By leveraging cutting-edge technology, we aim to empower individuals and organizations to navigate these domains with ease.
 
 ## Features
 1. **User-Friendly Interface**: Simplified navigation for all users.
