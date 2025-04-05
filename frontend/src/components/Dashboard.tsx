@@ -5,8 +5,7 @@ import {
   Newspaper, 
   GitCompare, 
   FileSpreadsheet,
-  Brain,
-  TrendingUp
+  Brain
 } from 'lucide-react';
 
 const features = [
