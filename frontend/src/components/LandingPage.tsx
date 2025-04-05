@@ -54,10 +54,10 @@ export default function LandingPage() {
       return setInterval(() => {
         setCounters(prev => {
           const newCounters = [...prev];
-          if (newCounters[index] < stat.increment) {
+          if (newCounters[index] < (stat.increment ?? 0)) {
             newCounters[index] = Math.min(
-              newCounters[index] + stat.increment / 50,
-              stat.increment
+              newCounters[index] + (stat.increment ?? 0) / 50,
+              stat.increment ?? 0
             );
           }
           return newCounters;

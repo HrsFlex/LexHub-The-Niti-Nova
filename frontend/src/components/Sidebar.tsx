@@ -16,8 +16,8 @@ const menuItems = [
   { icon: Scale, label: 'Case Research', path: '/cases' },
   { icon: FileText, label: 'Contract Analysis', path: '/contracts' },
   // { icon: Newspaper, label: 'Legal News', path: '/news' },
-  { icon: GitCompare, label: 'Document Comparison', path: '/compare' },
-  { icon: FileSpreadsheet, label: 'Forms Assistant', path: '/forms' },
+  { icon: GitCompare, label: 'Documents Comparison', path: '/compare' },
+  { icon: FileSpreadsheet, label: 'Draft Assistant', path: '/forms' },
   { icon: LayoutDashboard, label: 'Case Analytics', path: '/dashboard' },
   // { icon: LayoutDashboard, label: 'Find a Lawyer', path: '/find-lawyer' },
 ];
