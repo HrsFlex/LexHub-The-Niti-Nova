@@ -98,8 +98,9 @@ export default function LandingPage() {
             <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-slide-up">
               Transform your legal workflow with AI-powered intelligence
             </p>
+            
             <button 
-              onClick={() => navigate('/cases')}
+              onClick={() => window.open('http://localhost:8502', '_blank')}
               className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 mx-auto"
             >
               Get Started
