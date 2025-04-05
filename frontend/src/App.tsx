@@ -17,7 +17,8 @@ import FindLawyer from './components/pages/FindLawyer';
 import CaseAnalytics from './components/pages/CaseAnalytics';
 import Auth from './components/pages/Auth';
 import { AuthProvider } from './contexts/AuthContext';
-import AnimationScreen from './components/AnimationScreen'; // ← Import the animation screen
+import AnimationScreen from './components/AnimationScreen'; 
+// ← Import the animation screen
 
 const App: React.FC = () => {
   const [showAnimation, setShowAnimation] = useState(true);

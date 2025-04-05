@@ -83,7 +83,10 @@ export default function Dashboard() {
         </div>
 
         <div className="fixed bottom-6 right-6">
-          <button className="bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition-colors">
+          <button 
+            aria-label="Open AI Assistant"
+            className="bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition-colors"
+          >
             <Brain className="w-6 h-6" />
           </button>
         </div>

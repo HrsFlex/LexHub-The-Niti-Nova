@@ -1,13 +1,64 @@
 "use client";
 
 import React, { useState } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { MessageCircle, X, Loader2 } from "lucide-react";
 import ChatBot from "react-chatbot-kit";
 import "react-chatbot-kit/build/main.css";
+import {
+  createChatBotMessage as createChatBotMessageType,
+} from "react-chatbot-kit";
+import IWidget from 'react-chatbot-kit/build/src/interfaces/IWidget';
+
+// Types for clarity
+type ChatMessage = {
+  message: string;
+  type: string;
+  id: number;
+  loading?: boolean;
+  widget?: string;
+  delay?: number;
+  payload?: unknown;
+};
+
+type ChatState = {
+  messages: ChatMessage[];
+  gist?: string;
+  isLoading: boolean;
+  error?: string;
+};
+
+type MessageOptions = {
+  id?: string;
+  loading?: boolean;
+  widget?: string;
+  delay?: number;
+  payload?: unknown;
+};
+
+type ChatbotConfig = {
+  botName: string;
+  initialMessages: ChatMessage[];
+  customStyles?: Record<string, unknown>;
+  customComponents?: Record<string, React.ComponentType<unknown>>;
+  widgets?: IWidget[];
+  state?: Record<string, unknown>;
+};
 
 // ActionProvider
 class ActionProvider {
-  constructor(createChatBotMessage, setStateFunc, createClientMessage, stateRef, createCustomMessage) {
+  createChatBotMessage: typeof createChatBotMessageType;
+  setState: React.Dispatch<React.SetStateAction<ChatState>>;
+  createClientMessage: (message: string, options?: MessageOptions) => ChatMessage;
+  stateRef: ChatState;
+  createCustomMessage: (component: React.ReactNode, options?: MessageOptions) => ChatMessage;
+
+  constructor(
+    createChatBotMessage: typeof createChatBotMessageType,
+    setStateFunc: React.Dispatch<React.SetStateAction<ChatState>>,
+    createClientMessage: (message: string, options?: MessageOptions) => ChatMessage,
+    stateRef: ChatState,
+    createCustomMessage: (component: React.ReactNode, options?: MessageOptions) => ChatMessage
+  ) {
     this.createChatBotMessage = createChatBotMessage;
     this.setState = setStateFunc;
     this.createClientMessage = createClientMessage;
@@ -15,40 +66,56 @@ class ActionProvider {
     this.createCustomMessage = createCustomMessage;
   }
 
-  timer = (ms) => new Promise((res) => setTimeout(res, ms));
+  timer = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms));
 
-  callGenAI = async (prompt) => {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: prompt }),
-    });
-
-    const data = await res.json();
-    return data.response;
+  callGenAI = async (prompt: string): Promise<string> => {
+    try {
+      this.setState(prev => ({ ...prev, isLoading: true, error: undefined }));
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: prompt }),
+      });
+      
+      if (!res.ok) {
+        throw new Error('Failed to get response');
+      }
+      
+      const data = await res.json();
+      return data.response;
+    } catch (error) {
+      this.setState(prev => ({ 
+        ...prev, 
+        error: error instanceof Error ? error.message : 'An error occurred' 
+      }));
+      throw error;
+    } finally {
+      this.setState(prev => ({ ...prev, isLoading: false }));
+    }
   };
 
-  generateResponse = async (userMessage) => {
+  generateResponse = async (userMessage: string) => {
     const responseFromGPT = await this.callGenAI(userMessage);
-    const lines = responseFromGPT.split("\n").filter((line) => line.trim());
+    const lines = responseFromGPT.split("\n").filter((line: string) => line.trim());
 
     for (let i = 0; i < lines.length; i++) {
       const message = this.createChatBotMessage(lines[i], {
-        id: `msg-${Date.now()}-${i}`,
+        delay: 0,
+        loading: false
       });
       this.updateChatBotMessage(message);
       await this.timer(1000);
     }
   };
 
-  respond = (message) => {
+  respond = (message: string) => {
     this.generateResponse(message);
   };
 
-  updateChatBotMessage = (message) => {
-    this.setState((prevState) => ({
+  updateChatBotMessage = (message: ChatMessage) => {
+    this.setState((prevState: ChatState) => ({
       ...prevState,
       messages: [...prevState.messages, message],
     }));
@@ -57,28 +124,34 @@ class ActionProvider {
 
 // MessageParser
 class MessageParser {
-  constructor(actionProvider, state) {
+  actionProvider: ActionProvider;
+  state: ChatState;
+
+  constructor(actionProvider: ActionProvider, state: ChatState) {
     this.actionProvider = actionProvider;
     this.state = state;
   }
 
-  parse(message) {
+  parse(message: string) {
     this.actionProvider.respond(message);
   }
 }
 
 // Helper
-function createChatBotMessage(message, options = {}) {
+function createChatBotMessage(message: string, options: Partial<MessageOptions> = {}): ChatMessage {
   return {
     message,
     type: "bot",
-    id: options.id || `msg-${Date.now()}`,
-    ...options,
+    id: typeof options.id === 'number' ? options.id : Date.now(),
+    loading: options.loading,
+    widget: options.widget,
+    delay: options.delay,
+    payload: options.payload
   };
 }
 
 // Config
-const config = {
+const config: ChatbotConfig = {
   botName: "LegalAssistant",
   initialMessages: [
     createChatBotMessage("Hello! I'm your AI legal assistant. How can I help you today?", {
@@ -94,16 +167,19 @@ const config = {
     },
   },
   customComponents: {
-    botMessageBox: (props) => (
-      <div key={props.message.id} className="react-chatbot-kit-chat-bot-message w-full max-w-full">
-        <div className="react-chatbot-kit-chat-bot-message-container w-full">
-          <div className="react-chatbot-kit-chat-bot-message-arrow"></div>
-          <div className="react-chatbot-kit-chat-bot-message-text w-full text-white">
-            {props.message.message}
+    botMessageBox: (props: unknown) => {
+      const { message } = props as { message: ChatMessage };
+      return (
+        <div key={message.id} className="react-chatbot-kit-chat-bot-message w-full max-w-full">
+          <div className="react-chatbot-kit-chat-bot-message-container w-full">
+            <div className="react-chatbot-kit-chat-bot-message-arrow"></div>
+            <div className="react-chatbot-kit-chat-bot-message-text w-full text-white">
+              {message.message}
+            </div>
           </div>
         </div>
-      </div>
-    ),
+      );
+    },
   },
   widgets: [],
   state: {
@@ -111,7 +187,7 @@ const config = {
   },
 };
 
-export default function ChatWidget() {
+const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -124,6 +200,7 @@ export default function ChatWidget() {
               <h3 className="font-semibold">AI Legal Assistant</h3>
             </div>
             <button
+              aria-label="Close chat"
               onClick={() => setIsOpen(false)}
               className="hover:bg-blue-700 p-1 rounded-full transition-colors"
             >
@@ -139,13 +216,13 @@ export default function ChatWidget() {
                 messageParser={MessageParser}
                 placeholderText="Type your legal question..."
                 key="legal-chatbot"
-                className="h-full"
               />
             </div>
           </div>
         </div>
       ) : (
         <button
+          aria-label="Open chat"
           onClick={() => setIsOpen(true)}
           className="bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition-colors"
         >
@@ -153,7 +230,7 @@ export default function ChatWidget() {
         </button>
       )}
 
-      <style jsx global>{`
+      <style>{`
         .react-chatbot-kit-chat-container {
           width: 100% !important;
         }
@@ -185,5 +262,6 @@ export default function ChatWidget() {
       `}</style>
     </div>
   );
-}
+};
 
+export default ChatWidget;

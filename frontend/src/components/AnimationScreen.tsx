@@ -1,5 +1,5 @@
 import React from "react";
-import example from "./pages/example.jpg"
+import example from "./pages/example.png"
 
 interface AnimationScreenProps {
   showAnimation: boolean;
