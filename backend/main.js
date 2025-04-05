@@ -5,3 +5,24 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+dotenv.config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const apiKey = "AIzaSyCmzuYdL8nB-YhFzL-AJcFymtyIVfPExdw";
+const genAI = new GoogleGenerativeAI(apiKey);
+
+// Multer setup for file uploads
+const upload = multer({ dest: "uploads/" });
+
+// Function to analyze the contract PDF using Gemini API
+async function analyzeContractWithGemini(filePath) {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+
+    // Read the file and convert it to Base64
+    const pdfBuffer = fs.readFileSync(filePath);
+    const base64Pdf = pdfBuffer.toString("base64");
