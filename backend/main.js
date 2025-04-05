@@ -49,3 +49,50 @@ async function analyzeContractWithGemini(filePath) {
     
     // Remove asterisks from the response
     textResponse = textResponse.replace(/\*/g, "");
+
+    // Check if the text is a valid JSON string
+        try {
+          const parsedResponse = textResponse;
+          return parsedResponse;
+        } catch (jsonError) {
+          throw new Error("Error parsing Gemini API response: " + jsonError.message);
+        }
+      } catch (error) {
+        console.error("❌ Error analyzing contract:", error);
+        throw new Error("Failed to analyze contract. Details: " + error.message);
+      }
+    }
+    
+    // API Route for contract analysis
+    app.post("/analyze", upload.single("contract"), async (req, res) => {
+      try {
+        if (!req.file) {
+          return res.status(400).json({ error: "No file uploaded" });
+        }
+    
+        const filePath = path.join(__dirname, req.file.path);
+        const analysis = await analyzeContractWithGemini(filePath);
+    
+        // Try parsing the response and return a structured response
+        let parsedAnalysis;
+        try {
+          parsedAnalysis = analysis;
+        } catch (parseError) {
+          console.error("Error parsing analysis response:", parseError);
+          parsedAnalysis = { error: "Failed to parse analysis result" };
+        }
+    
+        res.json({ analysis: parsedAnalysis });
+    
+        // Delete the uploaded file after processing
+        fs.unlinkSync(filePath);
+      } catch (error) {
+        console.error("❌ Server Error:", error);
+        res.status(500).json({ error: error.message });
+      }
+    });
+    
+    // Start Express Server
+    const PORT = 5001;
+    app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+    
