@@ -26,7 +26,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation (Hidden on Small Screens) */}
           <div className="hidden md:flex items-center gap-8">
-            {["Home", "Dashboard", "Case Research", "Contracts", "News", "Doc Compare", "Form Guide", "Find a Lawyer"].map((item, index) => (
+            {[ "Dashboard", "Case Research", "Contracts", "Doc Compare", "Form Guide",].map((item, index) => (
               <Link key={index} to={`/${item.toLowerCase().replace(" ", "-")}`} className="text-gray-300 hover:text-white transition-colors">
                 {item}
               </Link>
@@ -75,7 +75,7 @@ export default function Navbar() {
         {/* Mobile Navigation Menu */}
         <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}>
           <div className="flex flex-col items-center bg-slate-800 py-4 gap-4">
-            {["Home", "Dashboard", "Case Research", "Contracts", "News", "Doc Compare", "Form Guide", "Find a Lawyer"].map((item, index) => (
+            {["Case Research", "Contracts", "Doc Compare", "Form Guide", ].map((item, index) => (
               <Link 
                 key={index} 
                 to={`/${item.toLowerCase().replace(" ", "-")}`} 
