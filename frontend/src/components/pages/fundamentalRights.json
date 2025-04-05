@@ -1,0 +1,108 @@
+[
+    {
+        "category": "Right to Equality",
+        "articles": [
+            {
+                "article": "Article 14",
+                "description": "Equality before the law and equal protection of the laws within India."
+            },
+            {
+                "article": "Article 15",
+                "description": "Prohibition of discrimination on grounds of religion, race, caste, sex, or place of birth."
+            },
+            {
+                "article": "Article 16",
+                "description": "Equality of opportunity in matters of public employment."
+            },
+            {
+                "article": "Article 17",
+                "description": "Abolition of untouchability and prohibition of its practice."
+            },
+            {
+                "article": "Article 18",
+                "description": "Abolition of titles (except academic and military distinctions)."
+            }
+        ]
+    },
+    {
+        "category": "Right to Freedom",
+        "articles": [
+            {
+                "article": "Article 19",
+                "description": "Six freedoms including speech, assembly, association, movement, residence, and profession."
+            },
+            {
+                "article": "Article 20",
+                "description": "Protection in respect of conviction for offenses (no double jeopardy, no ex post facto law)."
+            },
+            {
+                "article": "Article 21",
+                "description": "Right to life and personal liberty."
+            },
+            {
+                "article": "Article 21A",
+                "description": "Right to education (free and compulsory education for children aged 6–14 years)."
+            },
+            {
+                "article": "Article 22",
+                "description": "Protection against arrest and detention in certain cases."
+            }
+        ]
+    },
+    {
+        "category": "Right against Exploitation",
+        "articles": [
+            {
+                "article": "Article 23",
+                "description": "Prohibition of human trafficking and forced labor."
+            },
+            {
+                "article": "Article 24",
+                "description": "Prohibition of child labor in hazardous industries and occupations."
+            }
+        ]
+    },
+    {
+        "category": "Right to Freedom of Religion",
+        "articles": [
+            {
+                "article": "Article 25",
+                "description": "Freedom of conscience and the right to freely profess, practice, and propagate religion."
+            },
+            {
+                "article": "Article 26",
+                "description": "Freedom to manage religious affairs."
+            },
+            {
+                "article": "Article 27",
+                "description": "Freedom from payment of taxes for promotion of any religion."
+            },
+            {
+                "article": "Article 28",
+                "description": "Freedom from attending religious instruction in educational institutions wholly funded by the State."
+            }
+        ]
+    },
+    {
+        "category": "Cultural and Educational Rights",
+        "articles": [
+            {
+                "article": "Article 29",
+                "description": "Protection of the interests of minorities to preserve their culture, language, or script."
+            },
+            {
+                "article": "Article 30",
+                "description": "Right of minorities to establish and administer educational institutions."
+            }
+        ]
+    },
+    {
+        "category": "Right to Constitutional Remedies",
+        "articles": [
+            {
+                "article": "Article 32",
+                "description": "Right to approach the Supreme Court or High Courts for enforcement of Fundamental Rights."
+            }
+        ]
+    }
+]

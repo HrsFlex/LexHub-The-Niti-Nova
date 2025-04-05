@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Scale, Shield, Brain, Sparkles, ArrowRight } from 'lucide-react';
 import Navbar from './Navbar';
+import FundamentalRights from './pages/FundamentalRights';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -169,6 +170,26 @@ export default function LandingPage() {
           </button>
         </div>
       </div>
+
+      {/* // Fundamental Rights Section */}
+      <div className="bg-slate-900 py-16">
+        <div className="container mx-auto px-4">
+          <FundamentalRights />
+        </div>
+      </div>
+      {/* Footer Section */}
+      <footer className="bg-white text-blue-900 py-8">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-center md:text-left">
+            © {new Date().getFullYear()} LexHub. All rights reserved.
+          </p>
+          <div className="flex gap-4">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Contact</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

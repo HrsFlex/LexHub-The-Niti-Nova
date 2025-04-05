@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import LandingPage from './components/LandingPage';
@@ -17,11 +17,26 @@ import FindLawyer from './components/pages/FindLawyer';
 import CaseAnalytics from './components/pages/CaseAnalytics';
 import Auth from './components/pages/Auth';
 import { AuthProvider } from './contexts/AuthContext';
+import AnimationScreen from './components/AnimationScreen'; 
+// ← Import the animation screen
 
+const App: React.FC = () => {
+  const [showAnimation, setShowAnimation] = useState(true);
 
-function App() {
-    return (
-      <AuthProvider>
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAnimation(false);
+    }, 2000); // Animation duration (3 seconds)
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (showAnimation) {
+    return <AnimationScreen showAnimation={showAnimation} />;
+  }
+
+  return (
+    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -33,7 +48,6 @@ function App() {
                 <Sidebar />
                 <main className="flex-1 overflow-auto">
                   <Routes>
-                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                     <Route path="/cases" element={<CaseResearch />} />
                     <Route path="/contracts" element={<ContractAnalysis />} />
                     <Route path="/news" element={<LegalNews />} />
@@ -54,8 +68,7 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
-    );
-  }
+  );
+};
 
-  
-export default App
+export default App;
