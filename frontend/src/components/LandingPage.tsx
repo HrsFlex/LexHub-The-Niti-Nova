@@ -100,7 +100,7 @@ export default function LandingPage() {
             </p>
             
             <button 
-              onClick={() => window.open('http://localhost:8502', '_blank')}
+              onClick={() => window.open('http://localhost:8501', '_blank')}
               className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 mx-auto"
             >
               Get Started
