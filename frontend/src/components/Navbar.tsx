@@ -21,7 +21,7 @@ export default function Navbar() {
           {/* Left Side - Logo */}
           <Link to="/" className="flex items-center gap-2 hover:text-blue-400 transition-colors">
             <Scale className="w-8 h-8 text-blue-400" />
-            <span className="text-xl font-bold text-white">LexGPT</span>
+            <span className="text-xl font-bold text-white">LexHub</span>
           </Link>
 
           {/* Desktop Navigation (Hidden on Small Screens) */}

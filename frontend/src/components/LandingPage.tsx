@@ -93,7 +93,7 @@ export default function LandingPage() {
               <Scale className="w-16 h-16 text-blue-400 animate-bounce" />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-              LexGPT
+              LexHub
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8 animate-slide-up">
               Transform your legal workflow with AI-powered intelligence
@@ -158,7 +158,7 @@ export default function LandingPage() {
             Ready to Transform Your Legal Practice?
           </h2>
           <p className="text-xl text-gray-600 mb-8 animate-slide-up">
-            Join thousands of legal professionals using LexGPT
+            Join thousands of legal professionals using LexHub
           </p>
           <button 
             onClick={() => navigate('/dashboard')}
