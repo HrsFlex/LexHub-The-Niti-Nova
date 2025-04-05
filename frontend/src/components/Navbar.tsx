@@ -26,7 +26,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation (Hidden on Small Screens) */}
           <div className="hidden md:flex items-center gap-8">
-            {[ "Dashboard", "Case Research", "Contracts", "Doc Compare", "Form Guide",].map((item, index) => (
+            {[ "Case Research", "Contracts", "Doc Compare", "Form Guide",].map((item, index) => (
               <Link key={index} to={`/${item.toLowerCase().replace(" ", "-")}`} className="text-gray-300 hover:text-white transition-colors">
                 {item}
               </Link>
