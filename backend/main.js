@@ -26,3 +26,26 @@ async function analyzeContractWithGemini(filePath) {
     // Read the file and convert it to Base64
     const pdfBuffer = fs.readFileSync(filePath);
     const base64Pdf = pdfBuffer.toString("base64");
+
+    console.log("🔹 Sending request to Gemini API...");
+
+    const result = await model.generateContent([
+      {
+        inlineData: {
+          mimeType: "application/pdf",
+          data: base64Pdf,
+        },
+      },
+      "Analyze this contract for 3 high-risk clauses, 2-3 compliance issues, and suggest  2-3 alternatives,",
+    ]);
+
+    console.log("✅ Response received from Gemini API:", result);
+
+    if (!result || !result.response || !result.response.text) {
+      throw new Error("Invalid response from Gemini API");
+    }
+
+    let textResponse = result.response.text();
+    
+    // Remove asterisks from the response
+    textResponse = textResponse.replace(/\*/g, "");
